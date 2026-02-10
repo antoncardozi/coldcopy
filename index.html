@@ -75,7 +75,7 @@ a:hover{color:var(--accent3)}
 
 .badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;letter-spacing:.02em}
 
-.fade-in{opacity:1;transform:none}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
 .fade-in.visible{opacity:1;transform:none}
 
 /* ========== NAV ========== */
@@ -319,9 +319,10 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
         <textarea id="email-input" placeholder="Paste your full cold email body here..."></textarea>
       </div>
       <button class="btn btn-primary score-btn" onclick="scoreEmail()">
-        <span class="btn-text">Score My Email</span>
+        <span class="btn-text">Score My Email — Instant</span>
         <span class="spinner"></span>
       </button>
+      <p style="text-align:center;color:var(--text3);font-size:.8rem;margin-top:8px">Free instant scoring — no account needed</p>
     </div>
     <div class="scorer-results" id="scorer-results">
       <div class="score-hero" id="score-hero">
@@ -331,12 +332,14 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
       </div>
       <div id="score-categories"></div>
       <div class="score-actions">
+        <button class="btn btn-sm" id="ai-score-btn" onclick="getAIScore()" style="background:var(--gradient2);color:#fff">🤖 Get AI Analysis</button>
         <button class="btn btn-primary btn-sm" onclick="shareScore()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012 8v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
           Share Score
         </button>
         <button class="btn btn-secondary btn-sm" onclick="resetScorer()">Try Again</button>
       </div>
+      <p id="ai-badge" style="display:none;text-align:center;margin-top:12px;font-size:.8rem;color:var(--accent3)">✨ AI-powered analysis by GPT-4o-mini</p>
     </div>
   </div>
 </div>
@@ -383,9 +386,9 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
       <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$0</div>
       <p style="color:var(--text2);font-size:.9rem;margin-bottom:24px">Forever</p>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1">
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Unlimited instant scores</li>
         <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> 3 AI scores per day</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> All templates</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Basic scoring tips</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> All 35 templates</li>
         <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Email playbook</li>
       </ul>
       <a href="#scorer" class="btn btn-secondary" style="width:100%;justify-content:center">Start Scoring</a>
@@ -394,7 +397,7 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
     <div style="background:var(--bg2);border:2px solid var(--accent);border-radius:var(--radius);padding:40px 32px;display:flex;flex-direction:column;position:relative">
       <span class="badge" style="position:absolute;top:-12px;right:24px;background:var(--gradient);color:#fff">POPULAR</span>
       <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:8px">Pro</h3>
-      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$12<span style="font-size:1rem;font-weight:500;color:var(--text2)">/mo</span></div>
+      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$19<span style="font-size:1rem;font-weight:500;color:var(--text2)">/mo</span></div>
       <p style="color:var(--text2);font-size:.9rem;margin-bottom:24px">Cancel anytime</p>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1">
         <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Unlimited AI scores</li>
@@ -522,48 +525,52 @@ async function startCheckout(){
 // Check for success return
 if(new URLSearchParams(window.location.search).get('success')==='true'){localStorage.setItem('cc_pro','true')}
 
-async function scoreEmail(){
+function scoreEmail(){
   let subject=document.getElementById('subject-input').value.trim();
   let body=document.getElementById('email-input').value.trim();
   if(!body){alert('Please paste your cold email body first.');return}
   
-  let btn=document.querySelector('.score-btn');
-  btn.classList.add('loading');
-  
-  let count=getScoreCount();
-  let useFallback=false;
-  
-  // Try AI scoring
-  if(count<3||isProUser()){
-    try{
-      let res=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject,body})});
-      if(res.ok){
-        let aiResult=await res.json();
-        incrementScoreCount();
-        renderResults(aiResult);
-        btn.classList.remove('loading');
-        incrementCounter();
-        return;
-      }
-      useFallback=true;
-    }catch(e){useFallback=true}
-  }else{
-    // Show upgrade prompt
-    if(!isProUser()&&count>=3){
-      btn.classList.remove('loading');
-      if(confirm('You\'ve used all 3 free AI scores today. Upgrade to Pro for unlimited scoring?\n\nClick OK to see pricing, or Cancel for a basic score.')){
-        document.getElementById('pricing').scrollIntoView({behavior:'smooth'});
-        return;
-      }
-      useFallback=true;
-    }
-  }
-  
-  // Fallback to client-side
+  // Instant client-side scoring — no loading, no API
   let result=computeScore(subject,body);
   renderResults(result);
-  btn.classList.remove('loading');
   incrementCounter();
+  
+  // Store for AI upgrade
+  window._lastSubject=subject;
+  window._lastBody=body;
+}
+
+async function getAIScore(){
+  let subject=window._lastSubject||document.getElementById('subject-input').value.trim();
+  let body=window._lastBody||document.getElementById('email-input').value.trim();
+  if(!body)return;
+  
+  let aiBtn=document.getElementById('ai-score-btn');
+  if(aiBtn){aiBtn.disabled=true;aiBtn.textContent='Analyzing...';}
+  
+  let count=getScoreCount();
+  if(!isProUser()&&count>=3){
+    if(confirm('You\'ve used all 3 free AI scores today. Upgrade to Pro for unlimited AI scoring?\n\nClick OK to see pricing.')){
+      document.getElementById('pricing').scrollIntoView({behavior:'smooth'});
+    }
+    if(aiBtn){aiBtn.disabled=false;aiBtn.textContent='🤖 Get AI Analysis';}
+    return;
+  }
+  
+  try{
+    let res=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject,body})});
+    if(res.ok){
+      let aiResult=await res.json();
+      incrementScoreCount();
+      renderResults(aiResult,true);
+      return;
+    }
+    alert('AI scoring is not available right now. Your instant score is still accurate!');
+  }catch(e){
+    alert('AI scoring is not available right now. Your instant score is still accurate!');
+  }finally{
+    if(aiBtn){aiBtn.disabled=false;aiBtn.textContent='🤖 Get AI Analysis';}
+  }
 }
 
 function computeScore(subject,body){
@@ -707,7 +714,7 @@ function computeScore(subject,body){
   return{total,cats};
 }
 
-function renderResults(result){
+function renderResults(result,isAI){
   let container=document.getElementById('scorer-results');
   let numEl=document.getElementById('score-number');
   let verdict=document.getElementById('score-verdict');
@@ -743,6 +750,17 @@ function renderResults(result){
     catWrap.innerHTML+=html;
     setTimeout(()=>{document.getElementById('bar-'+i).style.width=pct+'%'},100+i*100);
   });
+  
+  // Show/hide AI elements
+  let aiBadge=document.getElementById('ai-badge');
+  let aiBtn=document.getElementById('ai-score-btn');
+  if(isAI){
+    if(aiBadge)aiBadge.style.display='block';
+    if(aiBtn)aiBtn.style.display='none';
+  }else{
+    if(aiBadge)aiBadge.style.display='none';
+    if(aiBtn)aiBtn.style.display='';
+  }
   
   container.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -1748,6 +1766,9 @@ function handleCapture(e){
     source:'coldcopy',
     timestamp:new Date().toISOString()
   };
+  
+  // Submit to CF function (webhook relay)
+  fetch('/api/capture',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(()=>{});
   
   // Submit to Supabase
   fetch('https://mnlhidqhujbwwedtqvwb.supabase.co/rest/v1/contacts',{
