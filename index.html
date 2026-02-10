@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer data-website-id="dfid_45fRiGjaQcxhUZ6rmMuAk" data-domain="coldcopy.dev" src="https://datafa.st/js/script.js"></script>
 <title>ColdCopy — Free Cold Email Scorer & Template Library</title>
 <meta name="description" content="Score your cold email out of 100 and get specific tips to improve. Plus 30+ proven templates by industry. Free forever.">
 <meta name="keywords" content="cold email generator, cold email template, cold email scorer, email outreach, sales email, b2b email, cold email tips, sales outreach, email prospecting">
@@ -397,7 +398,7 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
     <div style="background:var(--bg2);border:2px solid var(--accent);border-radius:var(--radius);padding:40px 32px;display:flex;flex-direction:column;position:relative">
       <span class="badge" style="position:absolute;top:-12px;right:24px;background:var(--gradient);color:#fff">POPULAR</span>
       <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:8px">Pro</h3>
-      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$19<span style="font-size:1rem;font-weight:500;color:var(--text2)">/mo</span></div>
+      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$9<span style="font-size:1rem;font-weight:500;color:var(--text2)">/mo</span></div>
       <p style="color:var(--text2);font-size:.9rem;margin-bottom:24px">Cancel anytime</p>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1">
         <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Unlimited AI scores</li>
@@ -516,7 +517,7 @@ function isProUser(){return localStorage.getItem('cc_pro')==='true'}
 // Stripe checkout
 async function startCheckout(){
   try{
-    let res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({priceId:'price_1SzEiB5I5nmzz6RYjItiyCSx'})});
+    let res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({priceId:'price_1SzGjA5I5nmzz6RYsdcnxDK7'})});
     let data=await res.json();
     if(data.url)window.location.href=data.url;
     else alert('Something went wrong. Please try again.');
