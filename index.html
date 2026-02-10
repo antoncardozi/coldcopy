@@ -63,7 +63,7 @@ a:hover{color:var(--accent3)}
 
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .section{padding:100px 0}
-@media(max-width:768px){.section{padding:60px 0}.container{padding:0 16px}}
+@media(max-width:768px){.section{padding:60px 0}.container{padding:0 16px}#pricing [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important}}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-size:1rem;font-weight:600;cursor:pointer;transition:all .25s ease;border:none;font-family:inherit}
 .btn-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 24px rgba(99,102,241,.25)}
@@ -260,6 +260,7 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 .no-results{text-align:center;padding:60px 0;color:var(--text3);font-size:1.1rem}
 </style>
+<script defer data-website-id="dfid_coldcopy" data-domain="coldcopy.dev" src="https://datafa.st/js/script.js"></script>
 </head>
 <body>
 
@@ -272,6 +273,7 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
     <a href="#scorer">Scorer</a>
     <a href="#templates">Templates</a>
     <a href="#why-fail">Why Emails Fail</a>
+    <a href="#pricing">Pricing</a>
     <a href="#capture" class="btn btn-primary btn-sm nav-cta">Get Playbook</a>
   </div>
 </div>
@@ -367,6 +369,47 @@ footer .container{display:flex;justify-content:space-between;align-items:center;
 </div>
 </section>
 
+<!-- ====== PRICING ====== -->
+<section class="section" id="pricing">
+<div class="container">
+  <div class="pricing-header fade-in" style="text-align:center;margin-bottom:60px">
+    <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:16px">Simple Pricing</h2>
+    <p style="color:var(--text2);font-size:1.1rem;max-width:550px;margin:0 auto">Free forever for casual use. Go Pro for unlimited AI-powered scoring and advanced features.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:800px;margin:0 auto" class="fade-in">
+    <!-- Free -->
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:40px 32px;display:flex;flex-direction:column">
+      <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:8px">Free</h3>
+      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$0</div>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:24px">Forever</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1">
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> 3 AI scores per day</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> All templates</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Basic scoring tips</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Email playbook</li>
+      </ul>
+      <a href="#scorer" class="btn btn-secondary" style="width:100%;justify-content:center">Start Scoring</a>
+    </div>
+    <!-- Pro -->
+    <div style="background:var(--bg2);border:2px solid var(--accent);border-radius:var(--radius);padding:40px 32px;display:flex;flex-direction:column;position:relative">
+      <span class="badge" style="position:absolute;top:-12px;right:24px;background:var(--gradient);color:#fff">POPULAR</span>
+      <h3 style="font-size:1.25rem;font-weight:700;margin-bottom:8px">Pro</h3>
+      <div style="font-size:3rem;font-weight:800;margin-bottom:4px">$12<span style="font-size:1rem;font-weight:500;color:var(--text2)">/mo</span></div>
+      <p style="color:var(--text2);font-size:.9rem;margin-bottom:24px">Cancel anytime</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:32px;flex:1">
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Unlimited AI scores</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> AI rewrite suggestions</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> A/B variant generator</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> All templates + follow-ups</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:.9rem;color:var(--text2)"><span style="color:var(--green)">✓</span> Priority support</li>
+      </ul>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="startCheckout()">Get ColdCopy Pro →</button>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--text3);font-size:.8rem;margin-top:24px">Secure payment via Stripe. Cancel anytime from your dashboard.</p>
+</div>
+</section>
+
 <!-- ====== EMAIL CAPTURE ====== -->
 <section class="section" id="capture">
 <div class="container">
@@ -450,7 +493,36 @@ function countExcl(t){return(t.match(/!/g)||[]).length}
 
 // ---- SCORING ----
 let lastScore=0;
-function scoreEmail(){
+
+// Rate limiting
+function getScoreCount(){
+  let d=new Date().toISOString().slice(0,10);
+  let stored=JSON.parse(localStorage.getItem('cc_scores')||'{}');
+  if(stored.date!==d){stored={date:d,count:0};localStorage.setItem('cc_scores',JSON.stringify(stored))}
+  return stored.count;
+}
+function incrementScoreCount(){
+  let d=new Date().toISOString().slice(0,10);
+  let stored=JSON.parse(localStorage.getItem('cc_scores')||'{}');
+  if(stored.date!==d)stored={date:d,count:0};
+  stored.count++;
+  localStorage.setItem('cc_scores',JSON.stringify(stored));
+}
+function isProUser(){return localStorage.getItem('cc_pro')==='true'}
+
+// Stripe checkout
+async function startCheckout(){
+  try{
+    let res=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({priceId:'price_1SzEiB5I5nmzz6RYjItiyCSx'})});
+    let data=await res.json();
+    if(data.url)window.location.href=data.url;
+    else alert('Something went wrong. Please try again.');
+  }catch(e){alert('Could not start checkout. Please try again.')}
+}
+// Check for success return
+if(new URLSearchParams(window.location.search).get('success')==='true'){localStorage.setItem('cc_pro','true')}
+
+async function scoreEmail(){
   let subject=document.getElementById('subject-input').value.trim();
   let body=document.getElementById('email-input').value.trim();
   if(!body){alert('Please paste your cold email body first.');return}
@@ -458,12 +530,40 @@ function scoreEmail(){
   let btn=document.querySelector('.score-btn');
   btn.classList.add('loading');
   
-  setTimeout(()=>{
-    let result=computeScore(subject,body);
-    renderResults(result);
-    btn.classList.remove('loading');
-    incrementCounter();
-  },800);
+  let count=getScoreCount();
+  let useFallback=false;
+  
+  // Try AI scoring
+  if(count<3||isProUser()){
+    try{
+      let res=await fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({subject,body})});
+      if(res.ok){
+        let aiResult=await res.json();
+        incrementScoreCount();
+        renderResults(aiResult);
+        btn.classList.remove('loading');
+        incrementCounter();
+        return;
+      }
+      useFallback=true;
+    }catch(e){useFallback=true}
+  }else{
+    // Show upgrade prompt
+    if(!isProUser()&&count>=3){
+      btn.classList.remove('loading');
+      if(confirm('You\'ve used all 3 free AI scores today. Upgrade to Pro for unlimited scoring?\n\nClick OK to see pricing, or Cancel for a basic score.')){
+        document.getElementById('pricing').scrollIntoView({behavior:'smooth'});
+        return;
+      }
+      useFallback=true;
+    }
+  }
+  
+  // Fallback to client-side
+  let result=computeScore(subject,body);
+  renderResults(result);
+  btn.classList.remove('loading');
+  incrementCounter();
 }
 
 function computeScore(subject,body){
@@ -1649,12 +1749,17 @@ function handleCapture(e){
     timestamp:new Date().toISOString()
   };
   
-  // Submit to webhook
-  fetch('https://poppadubs.app.n8n.cloud/webhook/coldcopy-signup',{
+  // Submit to Supabase
+  fetch('https://mnlhidqhujbwwedtqvwb.supabase.co/rest/v1/contacts',{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)
-  }).catch(()=>{/* Silent fail — don't block UX */});
+    headers:{
+      'Content-Type':'application/json',
+      'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ubGhpZHFodWpid3dlZHRxdndiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMTQ4NTgsImV4cCI6MjA4NTc5MDg1OH0.5ZDeVsxf0gDmyjyuxoMQhuHrPMHoaDDFYNkWXzGrZOY',
+      'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ubGhpZHFodWpid3dlZHRxdndiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMTQ4NTgsImV4cCI6MjA4NTc5MDg1OH0.5ZDeVsxf0gDmyjyuxoMQhuHrPMHoaDDFYNkWXzGrZOY',
+      'Prefer':'return=minimal'
+    },
+    body:JSON.stringify({email:data.email,name:data.name,source:'coldcopy'})
+  }).catch(()=>{});
   
   document.getElementById('capture-form-wrap').style.display='none';
   document.getElementById('capture-success').style.display='block';
